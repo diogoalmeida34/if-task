@@ -152,8 +152,8 @@ interface Usuario {
 
 - **React Native** + **TypeScript**: Desenvolvimento mobile com tipagem forte.
 - **React Navigation**: Navegação entre telas.
-- **Styled Components** (opcional): Estilização de componentes.
-- **AsyncStorage** ou **Firebase**: Persistência de dados local ou em nuvem.
+- **Styled Components**: Estilização de componentes.
+- **AsyncStorage**: Persistência de dados local.
 - **Expo**: Ferramenta para build e execução do aplicativo mobile.
 
 ---
