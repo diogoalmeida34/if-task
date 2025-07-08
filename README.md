@@ -1,207 +1,133 @@
-## Projeto: *Sistema IF Task - Gestão de Tarefas e Projetos Acadêmicos*
+# 📚 IF Task - Sistema de Gestão de Tarefas e Projetos Acadêmicos
 
-
-## 👨🏻‍💻 Informações do Integrante
-
-**Nome**: Diogo Da Silva Almeida -  **Matrícula**: GU3059995
-
-## Vídeo de apresentação do Sistema
-https://youtu.be/iITLR9TOktk
+**IF Task** é um aplicativo mobile desenvolvido para auxiliar estudantes na organização de tarefas e projetos acadêmicos. A aplicação permite criar, visualizar, editar e excluir tarefas e projetos, com foco em usabilidade, organização visual e componentes reutilizáveis.
 
 ---
 
-## Planejamento Técnico - Sistema IF Task 📝
+## 👨‍💻 Desenvolvedor
 
-Este documento apresenta o planejamento técnico para o desenvolvimento do aplicativo **IF Task - Gestão de Tarefas e Projetos Acadêmicos**, com base nos protótipos de tela (Login, Lista de Tarefas, Nova Tarefa, Apagar Tarefa, Projetos, Novo Projeto, Apagar Projeto) e nos requisitos descritos nas histórias de usuário. O objetivo é mapear componentes reutilizáveis, propor uma estrutura de pastas modular e definir os modelos de dados.
-
----
-
-## 1. Mapeamento de Componentes Reutilizáveis
-
-A análise dos protótipos e das histórias de usuário revelou elementos de interface que se repetem. Abaixo, listamos os componentes reutilizáveis identificados, com seus contratos (nome, interface de props e descrição), projetados para suportar as funcionalidades do aplicativo.
-
-### Componente 1: BotaoPrimario.tsx
-- **Interface de Props**:
-```typescript
-interface BotaoPrimarioProps {
-  titulo: string;
-  onPress: () => void;
-  disabled?: boolean;
-  variante?: 'solid' | 'outline'; // Para suportar variações visuais
-}
-```
-- **Descrição**: Botão padrão para ações principais, como "Adicionar" (Nova Tarefa/Projeto), "Login" (tela de Login) e "Sim" (modais de confirmação). Suporta variação de estilo para flexibilidade.
-
-### Componente 2: BotaoSecundario.tsx
-- **Interface de Props**:
-```typescript
-interface BotaoSecundarioProps {
-  titulo: string;
-  onPress: () => void;
-}
-```
-- **Descrição**: Botão secundário para ações menos prioritárias, como "Não" (modais de confirmação) e "Esqueceu a senha?" (tela de Login).
-
-### Componente 3: CampoTexto.tsx
-- **Interface de Props**:
-```typescript
-interface CampoTextoProps {
-  label: string;
-  placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  tipo?: 'text' | 'email' | 'password' | 'date';
-  secureTextEntry?: boolean;
-}
-```
-- **Descrição**: Campo de entrada de texto para formulários, usado em telas como Login (email, senha), Nova Tarefa (título, descrição, data de vencimento) e Novo Projeto (título, descrição). Suporta diferentes tipos de entrada, incluindo data, para atender à formatação YYYY-MM-DD.
-
-### Componente 4: SelecaoPrioridade.tsx
-- **Interface de Props**:
-```typescript
-interface SelecaoPrioridadeProps {
-  value: 'Baixa' | 'Média' | 'Alta';
-  onChange: (prioridade: 'Baixa' | 'Média' | 'Alta') => void;
-}
-```
-- **Descrição**: Componente de seleção (dropdown ou botões) para definir a prioridade de uma tarefa, usado na tela de Nova Tarefa e Editar Tarefa.
-
-### Componente 5: CardTarefa.tsx
-- **Interface de Props**:
-```typescript
-interface CardTarefaProps {
-  tarefa: {
-    id: string;
-    titulo: string;
-    descricao: string;
-    dataVencimento: string;
-    prioridade: 'Baixa' | 'Média' | 'Alta';
-    status: 'Pendente' | 'Em Andamento' | 'Concluída';
-    projetoId: string;
-  };
-  onPress: (id: string) => void; // Navegar para edição
-  onDelete: (id: string) => void; // Abrir modal de exclusão
-}
-```
-- **Descrição**: Exibe uma tarefa em formato de cartão com título, descrição, data de vencimento, prioridade e status. Permite clicar para editar ou excluir, usado na tela de Lista de Tarefas.
-
-### Componente 6: CardProjeto.tsx
-- **Interface de Props**:
-```typescript
-interface CardProjetoProps {
-  projeto: {
-    id: string;
-    titulo: string;
-    descricao: string;
-  };
-  onPress: (id: string) => void; // Navegar para tarefas do projeto
-  onDelete: (id: string) => void; // Abrir modal de exclusão
-}
-```
-- **Descrição**: Exibe um projeto em formato de cartão com título e descrição. Permite clicar para visualizar tarefas associadas ou excluir, usado na tela de Projetos.
-
-### Componente 7: ModalConfirmacao.tsx
-- **Interface de Props**:
-```typescript
-interface ModalConfirmacaoProps {
-  mensagem: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  visivel: boolean;
-}
-```
-- **Descrição**: Modal reutilizável para confirmação de ações, como exclusão de tarefas (tela Apagar Tarefa) ou projetos (tela Apagar Projeto).
-
-### Componente 8: BarraNavegacao.tsx
-- **Interface de Props**:
-```typescript
-interface BarraNavegacaoProps {
-  telas: { nome: string; icone: string; rota: string }[];
-  telaAtiva: string;
-  onNavigate: (rota: string) => void;
-}
-```
-- **Descrição**: Barra de navegação inferior para alternar entre as telas de Tarefas, Projetos e Configurações. Suporta ícones e rotas para integração com React Navigation.
+- **Nome**: Diogo Da Silva Almeida
+- **Matrícula**: GU3059995
+- **Instituição**: IFSP - Instituto Federal de Educação, Ciência e Tecnologia de São Paulo
 
 ---
 
-## 2. Estrutura de Pastas e Arquivos
+## 🎥 Apresentação em Vídeo
 
-A estrutura de diretórios proposta é modular, com separação clara entre componentes, telas, modelos, serviços e estilos. Abaixo está a organização inicial do projeto:
+🔗 Assista no YouTube
+
+---
+
+## 📌 Funcionalidades
+
+- **Autenticação de usuário**: Login seguro para acesso ao app.
+- **Gerenciamento de tarefas**:
+  - Criação, edição e exclusão de tarefas.
+  - Atributos: título, descrição, data de vencimento, prioridade (Baixa, Média, Alta) e status (Pendente, Em Andamento, Concluída).
+- **Gerenciamento de projetos**:
+  - Criação, edição e exclusão de projetos.
+  - Atributos: título e descrição.
+- **Agrupamento**: Tarefas associadas a projetos.
+- **Confirmação de ações críticas**: Modal para confirmação de exclusão.
+- **Navegação intuitiva**: Acesso às principais seções em até 2 cliques.
+- **Interface responsiva**: Design adaptável com componentes reutilizáveis.
+
+---
+
+
+## 🧱 Estrutura de Pastas
 
 ```
 if-task/
-├── src/
-│   ├── assets/                     # Imagens, ícones e outros recursos estáticos
-│   │   ├── logo-ifsp.png          # Logotipo do IFSP
-│   │   ├── icons/                 # Ícones para barra de navegação
-│   ├── components/                # Componentes reutilizáveis
-│   │   ├── BotaoPrimario.tsx
-│   │   ├── BotaoSecundario.tsx
-│   │   ├── CampoTexto.tsx
-│   │   ├── SelecaoPrioridade.tsx
-│   │   ├── CardTarefa.tsx
-│   │   ├── CardProjeto.tsx
-│   │   ├── ModalConfirmacao.tsx
-│   │   ├── BarraNavegacao.tsx
-│   ├── screens/                   # Telas principais do aplicativo
-│   │   ├── LoginScreen.tsx        # Tela de login
-│   │   ├── ListaTarefasScreen.tsx # Tela de listagem de tarefas
-│   │   ├── NovaTarefaScreen.tsx   # Tela de criação de tarefas
-│   │   ├── EditarTarefaScreen.tsx # Tela de edição de tarefas
-│   │   ├── ProjetosScreen.tsx     # Tela de listagem de projetos
-│   │   ├── NovoProjetoScreen.tsx  # Tela de criação de projetos
-│   │   ├── EditarProjetoScreen.tsx # Tela de edição de projetos
-│   │   ├── ConfiguracoesScreen.tsx # Tela de configurações
-│   ├── models/                    # Interfaces TypeScript para modelos de dados
-│   │   ├── Tarefa.ts
-│   │   ├── Projeto.ts
-│   │   ├── Usuario.ts
-│   ├── services/                  # Lógica de negócio e integração com backend
-│   │   ├── AuthService.ts         # Serviço de autenticação
-│   │   ├── TarefaService.ts       # Serviço para CRUD de tarefas
-│   │   ├── ProjetoService.ts      # Serviço para CRUD de projetos
-│   ├── navigation/                # Configuração de navegação
-│   │   ├── AppNavigator.tsx       # Configuração do React Navigation
-│   ├── styles/                    # Estilos globais e temas
-│   │   ├── theme.ts               # Definições de cores, fontes e tamanhos
-│   │   ├── global.ts              # Estilos globais reutilizáveis
-│   ├── App.tsx                    # Ponto de entrada do aplicativo
-├── package.json                   # Dependências e scripts
-├── tsconfig.json                  # Configuração do TypeScript
-├── README.md                      # Documentação do projeto
+├───assets
+│   │   adaptive-icon.png
+│   │   favicon.png
+│   │   icon.png
+│   │   splash-icon.png
+│   │
+│   └───icons
+│           logo_ifsp.png
+│
+├───components
+│       BarraNavegacao.tsx
+│       BotaoPrimario.tsx
+│       BotaoSecundario.tsx
+│       CampoTexto.tsx
+│       CardProjeto.tsx
+│       CardTarefa.tsx
+│       ModalConfirmacao.tsx
+│       SelecaoPrioridade.tsx
+│       SelecaoProjeto.tsx
+│
+├───models
+│       Projeto.ts
+│       Tarefa.ts
+│       Usuario.ts
+│
+├───navigation
+│       AppNavigator.tsx
+│
+├───screens
+│       ConfiguracoesScreen.tsx
+│       EditarProjetoScreen.tsx
+│       EditarTarefaScreen.tsx
+│       ListaTarefasScreen.tsx
+│       LoginScreen.tsx
+│       NovaTarefaScreen.tsx
+│       NovoProjetoScreen.tsx
+│       ProjetosScreen.tsx
+│
+├───services
+│       AuthService.ts
+│       ProjetoService.ts
+│       TarefaService.ts
+│
+└───styles
+        global.ts
+        theme.ts
+├── package.json             # Dependências
+├── tsconfig.json            # Configuração TypeScript
+├── README.md                # Documentação do projeto
+├── App.tsx                  # Entrada principal do app
 ```
-
-### Justificativa
-- **assets/**: Armazena recursos estáticos, como o logotipo do IFSP e ícones para a barra de navegação, garantindo organização.
-- **components/**: Centraliza componentes reutilizáveis para facilitar manutenção e reutilização.
-- **screens/**: Cada tela corresponde a uma página dos protótipos, com telas de edição explícitas para atender às histórias de usuário (edição de tarefas e projetos).
-- **models/**: Contém interfaces TypeScript para garantir tipagem consistente em toda a aplicação.
-- **services/**: Separa a lógica de negócio (ex.: chamadas à API ou armazenamento local) das telas, promovendo desacoplamento.
-- **navigation/**: Gerencia a navegação entre telas usando React Navigation, atendendo ao requisito de navegação intuitiva (máximo de 2 cliques).
-- **styles/**: Centraliza configurações de tema e estilos globais para manter consistência visual.
-- **Arquivos de Configuração**: `package.json` e `tsconfig.json` são incluídos para refletir um projeto real, enquanto `README.md` documenta a configuração inicial.
 
 ---
 
-## 3. Definição dos Tipos de Dados (Models)
+## 🧩 Componentes Reutilizáveis
 
-Com base nos requisitos das histórias de usuário e nos protótipos, definimos as interfaces TypeScript para os principais modelos de dados manipulados pelo aplicativo.
+| Componente            | Descrição                                                                 |
+|-----------------------|---------------------------------------------------------------------------|
+| `BotaoPrimario`       | Botão principal para ações (ex: Login, Adicionar, Confirmar).              |
+| `BotaoSecundario`     | Botão para ações secundárias (ex: Cancelar, Esqueceu a senha).             |
+| `CampoTexto`          | Entrada de texto para formulários com suporte a diferentes tipos.          |
+| `SelecaoPrioridade`   | Seleção de prioridade da tarefa (Baixa, Média, Alta).                     |
+| `CardTarefa`          | Cartão com informações de uma tarefa e ações de edição/exclusão.          |
+| `CardProjeto`         | Cartão com informações de um projeto e ações de navegação/exclusão.       |
+| `ModalConfirmacao`    | Modal para confirmação de ações críticas (exclusão).                      |
+| `BarraNavegacao`      | Barra inferior para navegação entre seções (Tarefas, Projetos, Configurações). |
+| `SelecaoProjeto`      | Seleção de projetos para associação com tarefas.                          |
 
-### Modelo: Tarefa
+
+---
+
+## 🗃️ Modelos de Dados (TypeScript)
+
+### 🎯 Tarefa
+
 ```typescript
 interface Tarefa {
   id: string;
   titulo: string;
   descricao: string;
-  dataVencimento: string; // Formato: YYYY-MM-DD
+  dataVencimento: string; // YYYY-MM-DD
   prioridade: 'Baixa' | 'Média' | 'Alta';
   status: 'Pendente' | 'Em Andamento' | 'Concluída';
-  projetoId: string; // ID do projeto associado
+  projetoId: string;
 }
 ```
 
-### Modelo: Projeto
+### 🧪 Projeto
+
 ```typescript
 interface Projeto {
   id: string;
@@ -210,31 +136,92 @@ interface Projeto {
 }
 ```
 
-### Modelo: Usuario
+### 👤 Usuário
+
 ```typescript
 interface Usuario {
   id: string;
   email: string;
-  senha: string; // Armazenada de forma segura (hash)
+  senha: string; // Hash
 }
 ```
 
-### Justificativa
-- **Tarefa**: Inclui todos os campos exigidos pelas histórias de usuário (título, descrição, data de vencimento, prioridade, status) e `projetoId` para associar a tarefa a um projeto, conforme o requisito de agrupamento por projeto.
-- **Projeto**: Contém os campos necessários para criação e gerenciamento de projetos (título e descrição), conforme especificado na história de usuário 4.
-- **Usuario**: Representa os dados essenciais para autenticação, com `email` e `senha` (hash) para suportar a tela de Login. Não inclui `nome`, pois não é exigido pelos protótipos ou requisitos.
-- **Observação**: Não incluímos `usuarioId` em `Tarefa` ou `Projeto`, pois as histórias de usuário focam no "Usuário Padrão (Estudante)" sem menção a multiusuários. Isso simplifica o escopo atual, mas a estrutura permite adicionar `usuarioId` no futuro, se necessário.
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+- **React Native** + **TypeScript**: Desenvolvimento mobile com tipagem forte.
+- **React Navigation**: Navegação entre telas.
+- **Styled Components** (opcional): Estilização de componentes.
+- **AsyncStorage** ou **Firebase**: Persistência de dados local ou em nuvem.
+- **Expo**: Ferramenta para build e execução do aplicativo mobile.
 
 ---
 
-## 4. Considerações Finais
+## 🚀 Como Executar o Projeto
 
-Este planejamento técnico fornece uma base robusta para a implementação do **IF Task**. As principais vantagens incluem:
+### Pré-requisitos
 
-- **Componentes Reutilizáveis**: Interfaces de props detalhadas e flexíveis (ex.: suporte a `tipo` em `CampoTexto.tsx`, variações em `BotaoPrimario.tsx`) garantem reutilização eficiente e manutenção simplificada.
-- **Estrutura Modular**: A organização de pastas separa claramente responsabilidades, facilitando colaboração em equipe e escalabilidade.
-- **Modelos de Dados Alinhados**: As interfaces TypeScript refletem exatamente os requisitos, com tipagem forte para evitar erros em tempo de execução.
-- **Consistência Visual**: A inclusão da pasta `styles/` assegura um design uniforme, alinhado com a necessidade de navegação intuitiva.
-- **Escalabilidade**: A arquitetura permite futuras expansões, como suporte a multiusuários ou integração com backend, sem grandes refatorações.
+- **Node.js** (versão 16 ou superior)
+- **npm** ou **yarn**
+- **Expo CLI**: Instale globalmente com `npm install -g expo-cli`
+- Dispositivo ou emulador (Android/iOS) configurado
 
-A próxima etapa será a implementação dos componentes e telas em **React Native** com **TypeScript**, utilizando **React Navigation** para navegação e uma solução de persistência de dados para atender às funcionalidades de CRUD de tarefas e projetos. Esse planejamento serve como um guia claro para a equipe, reduzindo retrabalho e garantindo um desenvolvimento organizado.
+### Passos para Instalação e Execução
+
+1. **Clone o repositório**:
+
+   ```bash
+   git clone https://github.com/seu-usuario/if-task.git
+   cd if-task
+   ```
+
+2. **Instale as dependências**:
+
+   ```bash
+   npm install
+   ```
+
+   ou
+
+   ```bash
+   yarn install
+   ```
+
+3. **Inicie o servidor Expo**:
+
+   ```bash
+   expo start
+   ```
+
+   ou
+
+   ```bash
+   npm start
+   ```
+
+4. **Execute no dispositivo/emulador**:
+
+   - Escaneie o QR code com o aplicativo **Expo Go** (disponível para iOS e Android).
+   - Alternativamente, pressione `a` no terminal para abrir no emulador Android ou `i` para iOS (emuladores devem estar configurados).
+
+---
+
+## 🛡️ Licença
+
+Este projeto está licenciado sob a MIT License.  
+Consulte o arquivo [`LICENSE`](LICENSE) para mais detalhes.
+
+---
+
+## 🧠 Considerações Finais
+
+O sistema **IF Task** foi planejado com foco em:
+
+- **Reutilização de componentes**: Para maior manutenibilidade.
+- **Navegação simples**: Acesso às seções em até 2 cliques.
+- **Tipagem forte**: Uso de TypeScript para segurança no desenvolvimento.
+- **Modularidade**: Separação de responsabilidades em pastas organizadas.
+- **Escalabilidade**: Estrutura preparada para expansões futuras (ex: suporte a multiusuários ou integração com backend REST).
+
+Este repositório representa o resultado final do projeto acadêmico, com estrutura, documentação e implementação alinhadas às boas práticas de desenvolvimento mobile.
